@@ -29,18 +29,40 @@
     header {
       flex: 0 0 auto;
       text-align: center;
-      padding: 14px 12px 10px;
+      padding: 12px 10px;
     }
 
     h1 {
-      margin: 0 0 5px;
+      margin: 0 0 4px;
       font-size: 23px;
     }
 
     header p {
-      margin: 0;
+      margin: 0 0 10px;
       font-size: 14px;
       opacity: .85;
+    }
+
+    .radio-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 20px;
+      background: #ffcf52;
+      color: #17120a;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .radio-button:active {
+      transform: scale(.97);
+    }
+
+    #status {
+      font-size: 12px;
+      min-height: 16px;
+      margin-top: 6px;
+      opacity: .8;
     }
 
     model-viewer {
@@ -50,7 +72,6 @@
       min-height: 0;
       background: #111;
       position: relative;
-      --poster-color: #111;
     }
 
     .ar-button {
@@ -61,23 +82,18 @@
       border: 0;
       border-radius: 999px;
       padding: 16px 25px;
-      background: #ffffff;
-      color: #111111;
+      background: white;
+      color: #111;
       font-size: 17px;
       font-weight: 800;
       white-space: nowrap;
       box-shadow: 0 4px 18px #0008;
       cursor: pointer;
-      z-index: 10;
-    }
-
-    .ar-button:active {
-      transform: translateX(-50%) scale(.97);
     }
 
     footer {
       flex: 0 0 auto;
-      padding: 8px 12px;
+      padding: 7px 10px;
       text-align: center;
       font-size: 12px;
       opacity: .75;
@@ -89,7 +105,18 @@
   <header>
     <h1>🏊 Spektrum Bajlando</h1>
     <p>Inkluzywne wczasy dla każdego!</p>
+
+    <button id="radio" class="radio-button" type="button">
+      📻 RADIO WAKAJKI ▶
+    </button>
+    <div id="status">Włącz wakacyjny klimat 🎶</div>
   </header>
+
+  <audio id="music"
+    src="./assets/AllInclusive_SpektrumBajlando.mp3"
+    preload="auto"
+    loop>
+  </audio>
 
   <model-viewer
     id="basen"
@@ -104,14 +131,42 @@
     ar-placement="floor"
     xr-environment>
 
-    <button slot="ar-button" class="ar-button">
+    <button slot="ar-button" class="ar-button" type="button">
       📱 URUCHOM AR 🏊
     </button>
 
   </model-viewer>
 
   <footer>
-    Obracaj basen palcem lub przenieś go do swojej przestrzeni!
+    Zeskanuj. Wypocznij. Posłuchaj. 🍹
   </footer>
+
+  <script>
+    const music = document.getElementById('music');
+    const radio = document.getElementById('radio');
+    const status = document.getElementById('status');
+
+    radio.addEventListener('click', async () => {
+      if (!music.paused) {
+        music.pause();
+        radio.textContent = '📻 RADIO WAKAJKI ▶';
+        status.textContent = 'Radio wyłączone. Cisza przy basenie 😎';
+        return;
+      }
+
+      try {
+        await music.play();
+        radio.textContent = '⏸ RADIO WAKAJKI';
+        status.textContent = '🔊 Nadajemy wakacyjnie!';
+      } catch (error) {
+        status.textContent =
+          'Nie udało się odtworzyć. Spróbuj kliknąć ponownie.';
+      }
+    });
+
+    music.addEventListener('ended', () => {
+      radio.textContent = '📻 RADIO WAKAJKI ▶';
+    });
+  </script>
 </body>
 </html>
