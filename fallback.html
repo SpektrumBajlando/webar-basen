@@ -1,64 +1,117 @@
+
 <!doctype html>
 <html lang="pl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Spektrum Bajlando — Basen AR</title>
 
-    <title>Basen AR</title>
+  <script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
 
-    <script type="module"
-      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-    </script>
+  <style>
+    * { box-sizing: border-box; }
 
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        background: #0b0b0b;
-        color: white;
-      }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      color: white;
+      background: #0b0b0b;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
 
-      header {
-        padding: 16px;
-        text-align: center;
-      }
+    header {
+      flex: 0 0 auto;
+      text-align: center;
+      padding: 14px 12px 10px;
+    }
 
-      h1 {
-        margin: 0 0 6px;
-      }
+    h1 {
+      margin: 0 0 5px;
+      font-size: 23px;
+    }
 
-      p {
-        margin: 0;
-        opacity: .8;
-      }
+    header p {
+      margin: 0;
+      font-size: 14px;
+      opacity: .85;
+    }
 
-      model-viewer {
-        width: 100vw;
-        height: calc(100vh - 110px);
-        background: #111;
-      }
-    </style>
-  </head>
+    model-viewer {
+      display: block;
+      width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+      background: #111;
+      position: relative;
+      --poster-color: #111;
+    }
 
-  <body>
+    .ar-button {
+      position: absolute;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      border: 0;
+      border-radius: 999px;
+      padding: 16px 25px;
+      background: #ffffff;
+      color: #111111;
+      font-size: 17px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 4px 18px #0008;
+      cursor: pointer;
+      z-index: 10;
+    }
 
-    <header>
-      <h1>🏊 Basen</h1>
-      <p>Obejrzyj model lub umieść go w swojej przestrzeni.</p>
-    </header>
+    .ar-button:active {
+      transform: translateX(-50%) scale(.97);
+    }
 
-    <model-viewer
-      src="./assets/model.glb"
-      alt="Model basenu"
-      camera-controls
-      shadow-intensity="1"
-      exposure="0.9"
-      ar
-      ar-modes="webxr scene-viewer quick-look"
-      ar-scale="auto"
-      ar-placement="floor"
-      xr-environment>
-    </model-viewer>
+    footer {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 12px;
+      opacity: .75;
+    }
+  </style>
+</head>
 
-  </body>
+<body>
+  <header>
+    <h1>🏊 Spektrum Bajlando</h1>
+    <p>Inkluzywne wczasy dla każdego!</p>
+  </header>
+
+  <model-viewer
+    id="basen"
+    src="./assets/model.glb"
+    alt="Model basenu Spektrum Bajlando"
+    camera-controls
+    shadow-intensity="1"
+    exposure="0.9"
+    ar
+    ar-modes="webxr scene-viewer quick-look"
+    ar-scale="auto"
+    ar-placement="floor"
+    xr-environment>
+
+    <button slot="ar-button" class="ar-button">
+      📱 URUCHOM AR 🏊
+    </button>
+
+  </model-viewer>
+
+  <footer>
+    Obracaj basen palcem lub przenieś go do swojej przestrzeni!
+  </footer>
+</body>
 </html>
